@@ -1,0 +1,88 @@
+
+
+@define-color ttb_fg_color #000000;
+@define-color ttb_bg_color #ffffff;
+
+/*
+ * gerneral form
+ * */
+GtkRadioToolButton :checked GtkImage {
+    color: @ttb_bg_color;
+    background-color: @ttb_fg_color;
+}
+
+GtkRadioToolButton GtkImage {
+    color: @ttb_fg_color;
+    background-color: @ttb_bg_color;
+}
+
+/*
+ * select
+ * */
+.tool_select GtkImage {
+    background-image: url("tool_icon/select.svg");
+}
+
+.tool_select :checked GtkImage {
+    background-image: url("tool_icon/select-checked.svg");
+}
+
+/*
+ * association line
+ * */
+
+.tool_association_line GtkImage {
+    background-image: url("tool_icon/association_line.svg");
+}
+
+.tool_association_line :checked GtkImage {
+    background-image: url("tool_icon/association_line-checked.svg");
+}
+
+/*
+ * generalization line
+ * */
+.tool_generalization_line GtkImage {
+    background-image: url("tool_icon/generalization_line.svg");
+}
+
+.tool_generalization_line :checked GtkImage {
+    background-image: url("tool_icon/generalization_line-checked.svg");
+}
+
+/*
+ * composition line
+ * */
+
+.tool_composition_line GtkImage {
+    background-image: url("tool_icon/composition_line.svg");
+}
+
+.tool_composition_line :checked GtkImage {
+    background-image: url("tool_icon/composition_line-checked.svg");
+}
+
+/*
+ * class
+ * */
+
+.tool_class GtkImage {
+    background-image: url("tool_icon/class.svg");
+}
+
+.tool_class :checked GtkImage {
+    background-image: url("tool_icon/class-checked.svg");
+}
+
+/*
+ * use case
+ * */
+
+.tool_use_case GtkImage {
+    background-image: url("tool_icon/use_case.svg");
+}
+
+.tool_use_case :checked GtkImage {
+    background-image: url("tool_icon/use_case-checked.svg");
+}
+
