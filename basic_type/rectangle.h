@@ -3,23 +3,27 @@
 
 
 #include "point.h"
+#include "../canvas.h"
 
 typedef struct _rectangle {
-    point_t pos;
+    point_t center;
     double width;
     double height;
 } rectangle_t;
 
-extern inline rectangle_t *rectangle_create
+extern rectangle_t *rectangle_create
                             (double width, double height);
 
-extern inline int          is_rectangle_inside 
+extern int          is_rectangle_inside 
                             (rectangle_t *rect, point_t *pt);
 
-extern inline int          is_rectangle_covered
-                            (rectangle_t *target, rectangle_t *src);
+extern int          is_rectangle_covered
+                            (rectangle_t *dest, rectangle_t *src);
 
-extern inline void         rectangle_destory
+extern void         rectangle_paint
+                            (rectangle_t *rect, canvas_t *ca);
+
+extern void         rectangle_destroy
                             (rectangle_t *rect);
 
 #endif

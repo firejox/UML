@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/tool_plugin/select_plugin/">
+        <file preprocess="xml-stripblanks">select_plugin.ui</file>
+        <file preprocess="xml-stripblanks">change_object_name.ui</file>
+        <file>select_plugin.css</file>
+        <file>select.svg</file>
+    </gresource>
+</gresources>

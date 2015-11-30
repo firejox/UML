@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk+" version="3.16"/>
+    <object class="GtkImage" id="generalization_line_im">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="width-request">50</property>
+        <property name="height-request">45</property>
+    </object>
+    <object class="GtkRadioToolButton" id="generalization_line_btn">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="is_important">True</property>
+        <property name="label" translatable="yes">generalization line</property>
+        <property name="icon_widget">generalization_line_im</property>
+        <style>
+            <class name="generalization_line_plugin_btn" />
+        </style>
+    </object>
+
+</interface>
+

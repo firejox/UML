@@ -2,8 +2,11 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 #include "utils.h"
+
+#define EPS 1e-7
 
 #define XMEM_CHECK(mem)                         \
     do {                                        \
@@ -33,4 +36,20 @@ void *xrealloc (void *ptr, size_t size) {
 
 void xfree (void *ptr) {
     free (ptr);
+}
+
+int double_equal(double dest, double src) {
+    return islessequal(fabs(dest-src), EPS);
+}
+
+
+void xerror_log (const char *fmt, ...) {
+    va_list ap;
+
+    va_start (ap, fmt);
+
+    vfprintf (stderr, fmt, ap);
+
+    va_end (ap);
+
 }

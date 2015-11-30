@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk+" version="3.16"/>
+    <object class="GtkImage" id="select_im">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="width-request">50</property>
+        <property name="height-request">45</property>
+    </object>
+    <object class="GtkRadioToolButton" id="select_btn">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="is_important">True</property>
+        <property name="label" translatable="yes">select</property>
+        <property name="icon_widget">select_im</property>
+        <style>
+            <class name="select_plugin_btn" />
+        </style>
+    </object>
+    <object class="GtkMenu" id="select_menu">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+            <object class="GtkMenuItem" id="group">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">group</property>
+                <property name="use_underline">True</property>
+                <property name="sensitive" bind-property="active" bind-source="select_btn" />
+            </object>
+        </child>
+        <child>
+            <object class="GtkMenuItem" id="ungroup">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">ungroup</property>
+                <property name="use_underline">True</property>
+                <property name="sensitive" bind-property="active" bind-source="select_btn" />
+            </object>
+        </child>
+        <child>
+            <object class="GtkMenuItem" id="change_object_name">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">change object name</property>
+                <property name="use_underline">True</property>
+                <property name="sensitive" bind-property="active" bind-source="select_btn" />
+            </object>
+        </child>
+    </object>
+</interface>
+

@@ -14,6 +14,12 @@
 # EXTERNAL cache entries
 ########################
 
+//Path to a file.
+CAIRO_INCLUDE_DIRS:PATH=/usr/include/cairo
+
+//Path to a library.
+CAIRO_LIBRARIES:FILEPATH=/usr/lib64/libcairo.so
+
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
@@ -159,14 +165,17 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 //Path to a program.
 CMAKE_STRIP:FILEPATH=/usr/bin/strip
 
-//If true, cmake will use relative paths in makefiles and projects.
-CMAKE_USE_RELATIVE_PATHS:BOOL=OFF
-
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
+
+//Path to a program.
+GLIB_COMPILE_RESOURCES_EXEC:FILEPATH=/usr/bin/glib-compile-resources
+
+//Path to a file.
+PANGOCAIRO_INCLUDE_DIRS:PATH=/usr/include/pango-1.0
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
@@ -177,11 +186,24 @@ UMLMeow_BINARY_DIR:STATIC=/home/firejox/develop/uml_editor/build
 //Value Computed by CMake
 UMLMeow_SOURCE_DIR:STATIC=/home/firejox/develop/uml_editor
 
+//Dependencies for the target
+class_plugin_LIB_DEPENDS:STATIC=general;m;general;gtk-3;general;gdk-3;general;pangocairo-1.0;general;pango-1.0;general;atk-1.0;general;cairo-gobject;general;cairo;general;gdk_pixbuf-2.0;general;gio-2.0;general;gobject-2.0;general;glib-2.0;general;umlmeow;
+
+//Dependencies for the target
+select_plugin_LIB_DEPENDS:STATIC=general;m;general;gtk-3;general;gdk-3;general;pangocairo-1.0;general;pango-1.0;general;atk-1.0;general;cairo-gobject;general;cairo;general;gdk_pixbuf-2.0;general;gio-2.0;general;gobject-2.0;general;glib-2.0;general;umlmeow;
+
+//Dependencies for the target
+umlmeow_LIB_DEPENDS:STATIC=general;m;general;gtk-3;general;gdk-3;general;pangocairo-1.0;general;pango-1.0;general;atk-1.0;general;cairo-gobject;general;cairo;general;gdk_pixbuf-2.0;general;gio-2.0;general;gobject-2.0;general;glib-2.0;general;/usr/lib64/libcairo.so;general;pangocairo-1.0;general;pango-1.0;general;gobject-2.0;general;glib-2.0;general;cairo;
+
 
 ########################
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: CAIRO_INCLUDE_DIRS
+CAIRO_INCLUDE_DIRS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CAIRO_LIBRARIES
+CAIRO_LIBRARIES-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
 CMAKE_AR-ADVANCED:INTERNAL=1
 //This is the directory where this CMakeCache.txt was created
@@ -189,9 +211,9 @@ CMAKE_CACHEFILE_DIR:INTERNAL=/home/firejox/develop/uml_editor/build
 //Major version of cmake used to create the current loaded cache
 CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=3
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=4
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=2
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=0
 //ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
 CMAKE_COLOR_MAKEFILE-ADVANCED:INTERNAL=1
 //Path to CMake executable.
@@ -270,7 +292,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -278,7 +300,7 @@ CMAKE_OBJDUMP-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_RANLIB
 CMAKE_RANLIB-ADVANCED:INTERNAL=1
 //Path to CMake installation.
-CMAKE_ROOT:INTERNAL=/usr/share/cmake-3.3
+CMAKE_ROOT:INTERNAL=/usr/share/cmake-3.4
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG
@@ -307,28 +329,66 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 CMAKE_STRIP-ADVANCED:INTERNAL=1
 //uname command
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
-//ADVANCED property for variable: CMAKE_USE_RELATIVE_PATHS
-CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29()]
+//ADVANCED property for variable: GLIB_COMPILE_RESOURCES_EXEC
+GLIB_COMPILE_RESOURCES_EXEC-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PANGOCAIRO_INCLUDE_DIRS
+PANGOCAIRO_INCLUDE_DIRS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+_CAIRO_PC_CFLAGS:INTERNAL=-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/harfbuzz;-I/usr/include/freetype2;-I/usr/include/harfbuzz;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include;-I/usr/include/libdrm;-I/usr/include/libpng16
+_CAIRO_PC_CFLAGS_I:INTERNAL=
+_CAIRO_PC_CFLAGS_OTHER:INTERNAL=
+_CAIRO_PC_FOUND:INTERNAL=1
+_CAIRO_PC_INCLUDEDIR:INTERNAL=
+_CAIRO_PC_INCLUDE_DIRS:INTERNAL=/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/harfbuzz;/usr/include/glib-2.0;/usr/lib/glib-2.0/include;/usr/include/libdrm;/usr/include/libpng16
+_CAIRO_PC_LDFLAGS:INTERNAL=-lcairo
+_CAIRO_PC_LDFLAGS_OTHER:INTERNAL=
+_CAIRO_PC_LIBDIR:INTERNAL=
+_CAIRO_PC_LIBRARIES:INTERNAL=cairo
+_CAIRO_PC_LIBRARY_DIRS:INTERNAL=
+_CAIRO_PC_LIBS:INTERNAL=
+_CAIRO_PC_LIBS_L:INTERNAL=
+_CAIRO_PC_LIBS_OTHER:INTERNAL=
+_CAIRO_PC_LIBS_PATHS:INTERNAL=
+_CAIRO_PC_PREFIX:INTERNAL=
+_CAIRO_PC_STATIC_CFLAGS:INTERNAL=-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/harfbuzz;-I/usr/include/freetype2;-I/usr/include/harfbuzz;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include;-I/usr/include/libdrm;-I/usr/include/libpng16
+_CAIRO_PC_STATIC_CFLAGS_I:INTERNAL=
+_CAIRO_PC_STATIC_CFLAGS_OTHER:INTERNAL=
+_CAIRO_PC_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/harfbuzz;/usr/include/glib-2.0;/usr/lib/glib-2.0/include;/usr/include/libdrm;/usr/include/libpng16
+_CAIRO_PC_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/../lib;-lcairo;-lz;-lGL;-lgobject-2.0;-lffi;-lpixman-1;-lfontconfig;-lexpat;-lfreetype;-lexpat;-lfreetype;-lbz2;-lz;-lharfbuzz;-lglib-2.0;-pthread;-lpcre;-pthread;-lgraphite2;-lEGL;-lm;-lpthread;-ldl;-lGL;-lm;-lpthread;-ldl;-ldrm;-lXdamage;-lXfixes;-lX11-xcb;-lxcb-glx;-lxcb-dri2;-lxcb-dri3;-lxcb-present;-lxcb-randr;-lxcb-xfixes;-lxcb-shape;-lxcb-sync;-lxshmfence;-lXxf86vm;-lpng16;-lm;-lz;-lm;-lxcb-shm;-lxcb-render;-lXrender;-lXext;-lX11;-lpthread;-lxcb;-lXau;-lXdmcp
+_CAIRO_PC_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+_CAIRO_PC_STATIC_LIBDIR:INTERNAL=
+_CAIRO_PC_STATIC_LIBRARIES:INTERNAL=cairo;z;GL;gobject-2.0;ffi;pixman-1;fontconfig;expat;freetype;expat;freetype;bz2;z;harfbuzz;glib-2.0;pcre;graphite2;EGL;m;pthread;dl;GL;m;pthread;dl;drm;Xdamage;Xfixes;X11-xcb;xcb-glx;xcb-dri2;xcb-dri3;xcb-present;xcb-randr;xcb-xfixes;xcb-shape;xcb-sync;xshmfence;Xxf86vm;png16;m;z;m;xcb-shm;xcb-render;Xrender;Xext;X11;pthread;xcb;Xau;Xdmcp
+_CAIRO_PC_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/../lib
+_CAIRO_PC_STATIC_LIBS:INTERNAL=
+_CAIRO_PC_STATIC_LIBS_L:INTERNAL=
+_CAIRO_PC_STATIC_LIBS_OTHER:INTERNAL=
+_CAIRO_PC_STATIC_LIBS_PATHS:INTERNAL=
+_CAIRO_PC_VERSION:INTERNAL=1.14.4
+_CAIRO_PC_cairo_INCLUDEDIR:INTERNAL=
+_CAIRO_PC_cairo_LIBDIR:INTERNAL=
+_CAIRO_PC_cairo_PREFIX:INTERNAL=
+_CAIRO_PC_cairo_VERSION:INTERNAL=
 _GTK3_PC_CFLAGS:INTERNAL=-pthread;-I/usr/include/gtk-3.0;-I/usr/include/at-spi2-atk/2.0;-I/usr/include/at-spi-2.0;-I/usr/include/dbus-1.0;-I/usr/lib/dbus-1.0/include;-I/usr/include/gtk-3.0;-I/usr/include/gio-unix-2.0/;-I/usr/include/cairo;-I/usr/include/pango-1.0;-I/usr/include/atk-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/harfbuzz;-I/usr/include/freetype2;-I/usr/include/harfbuzz;-I/usr/include/libdrm;-I/usr/include/libpng16;-I/usr/include/gdk-pixbuf-2.0;-I/usr/include/libpng16;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include
 _GTK3_PC_CFLAGS_I:INTERNAL=
 _GTK3_PC_CFLAGS_OTHER:INTERNAL=-pthread
 _GTK3_PC_FOUND:INTERNAL=1
-_GTK3_PC_INCLUDEDIR:INTERNAL=/usr/include
+_GTK3_PC_INCLUDEDIR:INTERNAL=
 _GTK3_PC_INCLUDE_DIRS:INTERNAL=/usr/include/gtk-3.0;/usr/include/at-spi2-atk/2.0;/usr/include/at-spi-2.0;/usr/include/dbus-1.0;/usr/lib/dbus-1.0/include;/usr/include/gtk-3.0;/usr/include/gio-unix-2.0/;/usr/include/cairo;/usr/include/pango-1.0;/usr/include/atk-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/harfbuzz;/usr/include/libdrm;/usr/include/libpng16;/usr/include/gdk-pixbuf-2.0;/usr/include/libpng16;/usr/include/glib-2.0;/usr/lib/glib-2.0/include
 _GTK3_PC_LDFLAGS:INTERNAL=-lgtk-3;-lgdk-3;-lpangocairo-1.0;-lpango-1.0;-latk-1.0;-lcairo-gobject;-lcairo;-lgdk_pixbuf-2.0;-lgio-2.0;-lgobject-2.0;-lglib-2.0
 _GTK3_PC_LDFLAGS_OTHER:INTERNAL=
-_GTK3_PC_LIBDIR:INTERNAL=/usr/lib
+_GTK3_PC_LIBDIR:INTERNAL=
 _GTK3_PC_LIBRARIES:INTERNAL=gtk-3;gdk-3;pangocairo-1.0;pango-1.0;atk-1.0;cairo-gobject;cairo;gdk_pixbuf-2.0;gio-2.0;gobject-2.0;glib-2.0
 _GTK3_PC_LIBRARY_DIRS:INTERNAL=
 _GTK3_PC_LIBS:INTERNAL=
 _GTK3_PC_LIBS_L:INTERNAL=
 _GTK3_PC_LIBS_OTHER:INTERNAL=
 _GTK3_PC_LIBS_PATHS:INTERNAL=
-_GTK3_PC_PREFIX:INTERNAL=/usr
+_GTK3_PC_PREFIX:INTERNAL=
 _GTK3_PC_STATIC_CFLAGS:INTERNAL=-pthread;-I/usr/include/gtk-3.0;-I/usr/include/at-spi2-atk/2.0;-I/usr/include/at-spi-2.0;-I/usr/include/dbus-1.0;-I/usr/lib/dbus-1.0/include;-I/usr/include/gtk-3.0;-I/usr/include/gio-unix-2.0/;-I/usr/include/cairo;-I/usr/include/pango-1.0;-I/usr/include/atk-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/harfbuzz;-I/usr/include/freetype2;-I/usr/include/harfbuzz;-I/usr/include/libdrm;-I/usr/include/libpng16;-I/usr/include/gdk-pixbuf-2.0;-I/usr/include/libpng16;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include
 _GTK3_PC_STATIC_CFLAGS_I:INTERNAL=
 _GTK3_PC_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
@@ -342,10 +402,47 @@ _GTK3_PC_STATIC_LIBS:INTERNAL=
 _GTK3_PC_STATIC_LIBS_L:INTERNAL=
 _GTK3_PC_STATIC_LIBS_OTHER:INTERNAL=
 _GTK3_PC_STATIC_LIBS_PATHS:INTERNAL=
-_GTK3_PC_VERSION:INTERNAL=3.18.3
+_GTK3_PC_VERSION:INTERNAL=3.18.5
 _GTK3_PC_gtk+-3.0_INCLUDEDIR:INTERNAL=
 _GTK3_PC_gtk+-3.0_LIBDIR:INTERNAL=
 _GTK3_PC_gtk+-3.0_PREFIX:INTERNAL=
 _GTK3_PC_gtk+-3.0_VERSION:INTERNAL=
+_PANGOCAIRO_PC_CFLAGS:INTERNAL=-I/usr/include/pango-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/harfbuzz;-I/usr/include/freetype2;-I/usr/include/harfbuzz;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include;-I/usr/include/libdrm;-I/usr/include/libpng16
+_PANGOCAIRO_PC_CFLAGS_I:INTERNAL=
+_PANGOCAIRO_PC_CFLAGS_OTHER:INTERNAL=
+_PANGOCAIRO_PC_FOUND:INTERNAL=1
+_PANGOCAIRO_PC_INCLUDEDIR:INTERNAL=
+_PANGOCAIRO_PC_INCLUDE_DIRS:INTERNAL=/usr/include/pango-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/harfbuzz;/usr/include/glib-2.0;/usr/lib/glib-2.0/include;/usr/include/libdrm;/usr/include/libpng16
+_PANGOCAIRO_PC_LDFLAGS:INTERNAL=-lpangocairo-1.0;-lpango-1.0;-lgobject-2.0;-lglib-2.0;-lcairo
+_PANGOCAIRO_PC_LDFLAGS_OTHER:INTERNAL=
+_PANGOCAIRO_PC_LIBDIR:INTERNAL=
+_PANGOCAIRO_PC_LIBRARIES:INTERNAL=pangocairo-1.0;pango-1.0;gobject-2.0;glib-2.0;cairo
+_PANGOCAIRO_PC_LIBRARY_DIRS:INTERNAL=
+_PANGOCAIRO_PC_LIBS:INTERNAL=
+_PANGOCAIRO_PC_LIBS_L:INTERNAL=
+_PANGOCAIRO_PC_LIBS_OTHER:INTERNAL=
+_PANGOCAIRO_PC_LIBS_PATHS:INTERNAL=
+_PANGOCAIRO_PC_PREFIX:INTERNAL=
+_PANGOCAIRO_PC_STATIC_CFLAGS:INTERNAL=-I/usr/include/pango-1.0;-I/usr/include/cairo;-I/usr/include/pixman-1;-I/usr/include/freetype2;-I/usr/include/libpng16;-I/usr/include/harfbuzz;-I/usr/include/freetype2;-I/usr/include/harfbuzz;-I/usr/include/glib-2.0;-I/usr/lib/glib-2.0/include;-I/usr/include/libdrm;-I/usr/include/libpng16
+_PANGOCAIRO_PC_STATIC_CFLAGS_I:INTERNAL=
+_PANGOCAIRO_PC_STATIC_CFLAGS_OTHER:INTERNAL=
+_PANGOCAIRO_PC_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/pango-1.0;/usr/include/cairo;/usr/include/pixman-1;/usr/include/freetype2;/usr/include/libpng16;/usr/include/harfbuzz;/usr/include/freetype2;/usr/include/harfbuzz;/usr/include/glib-2.0;/usr/lib/glib-2.0/include;/usr/include/libdrm;/usr/include/libpng16
+_PANGOCAIRO_PC_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/../lib;-lpangocairo-1.0;-lpangoft2-1.0;-lpango-1.0;-lm;-lcairo;-lz;-lGL;-lgobject-2.0;-lffi;-lpixman-1;-lfontconfig;-lexpat;-lfreetype;-lexpat;-lfreetype;-lbz2;-lz;-lharfbuzz;-lglib-2.0;-pthread;-lpcre;-pthread;-lgraphite2;-lEGL;-lm;-lpthread;-ldl;-lGL;-lm;-lpthread;-ldl;-ldrm;-lXdamage;-lXfixes;-lX11-xcb;-lxcb-glx;-lxcb-dri2;-lxcb-dri3;-lxcb-present;-lxcb-randr;-lxcb-xfixes;-lxcb-shape;-lxcb-sync;-lxshmfence;-lXxf86vm;-lpng16;-lm;-lz;-lm;-lxcb-shm;-lxcb-render;-lXrender;-lXext;-lX11;-lpthread;-lxcb;-lXau;-lXdmcp
+_PANGOCAIRO_PC_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+_PANGOCAIRO_PC_STATIC_LIBDIR:INTERNAL=
+_PANGOCAIRO_PC_STATIC_LIBRARIES:INTERNAL=pangocairo-1.0;pangoft2-1.0;pango-1.0;m;cairo;z;GL;gobject-2.0;ffi;pixman-1;fontconfig;expat;freetype;expat;freetype;bz2;z;harfbuzz;glib-2.0;pcre;graphite2;EGL;m;pthread;dl;GL;m;pthread;dl;drm;Xdamage;Xfixes;X11-xcb;xcb-glx;xcb-dri2;xcb-dri3;xcb-present;xcb-randr;xcb-xfixes;xcb-shape;xcb-sync;xshmfence;Xxf86vm;png16;m;z;m;xcb-shm;xcb-render;Xrender;Xext;X11;pthread;xcb;Xau;Xdmcp
+_PANGOCAIRO_PC_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/../lib
+_PANGOCAIRO_PC_STATIC_LIBS:INTERNAL=
+_PANGOCAIRO_PC_STATIC_LIBS_L:INTERNAL=
+_PANGOCAIRO_PC_STATIC_LIBS_OTHER:INTERNAL=
+_PANGOCAIRO_PC_STATIC_LIBS_PATHS:INTERNAL=
+_PANGOCAIRO_PC_VERSION:INTERNAL=1.38.1
+_PANGOCAIRO_PC_pangocairo_INCLUDEDIR:INTERNAL=
+_PANGOCAIRO_PC_pangocairo_LIBDIR:INTERNAL=
+_PANGOCAIRO_PC_pangocairo_PREFIX:INTERNAL=
+_PANGOCAIRO_PC_pangocairo_VERSION:INTERNAL=
+__pkg_config_checked__CAIRO_PC:INTERNAL=1
 __pkg_config_checked__GTK3_PC:INTERNAL=1
+__pkg_config_checked__PANGOCAIRO_PC:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib
 

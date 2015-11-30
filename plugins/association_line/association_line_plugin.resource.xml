@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/tool_plugin/association_line_plugin/">
+        <file preprocess="xml-stripblanks">association_line_plugin.ui</file>
+        <file>association_line_plugin.css</file>
+        <file>association_line.svg</file>
+    </gresource>
+</gresources>

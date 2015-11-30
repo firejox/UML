@@ -4,9 +4,10 @@
 #include "object-protected.h"
 #include "component-protected.h"
 
-struct object_private {
-    point_t pos;
-    object_class *_class;
+struct _object_private {
+    unsigned int    type:2;
+    point_t         pos;
+    object_class    *_class;
 };
 
 

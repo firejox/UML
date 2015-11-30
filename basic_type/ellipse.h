@@ -3,6 +3,7 @@
 
 #include "point.h"
 #include "rectangle.h"
+#include "../canvas.h"
 
 typedef struct _ellipse {
     point_t center;
@@ -10,12 +11,14 @@ typedef struct _ellipse {
     double rate; /* y/x */
 } ellipse_t;
 
-extern inline ellipse_t *ellipse_create     (double radius, double rate);
+extern ellipse_t *ellipse_create     (double radius, double rate);
 
-extern inline int        is_ellipse_inside  (ellipse_t *e, point_t *pt);
+extern int        is_ellipse_inside  (ellipse_t *e, point_t *pt);
 
-extern inline int        is_ellipse_covered (ellipse_t *e, rectangle_t *src);
+extern int        is_ellipse_covered (ellipse_t *e, rectangle_t *src);
 
-extern inline void       ellipse_destory    (ellipse_t *e);
+extern void       ellipse_paint      (ellipse_t *e, canvas_t *ca); 
+
+extern void       ellipse_destroy    (ellipse_t *e);
 
 #endif

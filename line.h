@@ -1,20 +1,20 @@
 #ifndef __UML_LINE_H__
 #define __UML_LINE_H__
 
+typedef struct _line          line_t;
+typedef struct _line_class    line_class;
+typedef struct _line_private  line_private;
 
 #include "component.h"
 
 #include "line_decorate.h"
 #include "port_object.h"
-
-typedef struct _line          line_t;
-typedef struct _line_class    line_class;
-typedef struct _line_private  line_private; 
+ 
 
 struct _line {
     component_t parent;
     line_private *priv;
-} line_t;
+};
 
 
 struct _line_class {

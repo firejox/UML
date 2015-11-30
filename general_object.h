@@ -2,21 +2,19 @@
 #define __UML_GENERAL_OBJECT_H__
 
 
-#include "utils.h"
 #include "common.h"
 
+
+#include "general_object-type.h"
+
 #include "composite_object.h"
-#include "class_object.h"
-#include "use_case_object.h"
-
-typedef enum _general_object_type general_object_type;
-
-typedef struct _general_object general_object_t;
+#include "basic_object.h"
 
 
-#define GENRAL_OBJECT_TYPE_LIST                                     \
-    class_object, use_case_object, composite_object
-
+#define GO_GET_COMPONENT(go_p) ((go_p)->obj.__component_obj)
+#define GO_GET_TYPE(go_p) ((go_p)->type)
+#define GO_CREATE(TYPE) general_object_create_from_##TYPE
+#define GO_TYPE(TYPE) GO_##TYPE##_type
 
 /*
  *check exist empty argument
@@ -33,7 +31,7 @@ GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
  * enum detail generation
  * */
 #define GENERAL_MODULE_BEFORE_MAKE()                                \
-    enum _general_object_type {
+enum _general_object_type {
 
 #define GENERAL_MODULE_MAKE_MODULE(TYPE)                            \
         GO_##TYPE##_type,
@@ -49,7 +47,6 @@ GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
  * */
 #define GENERAL_MODULE_BEFORE_MAKE()                                \
     struct _general_object {                                        \
-        general_object_type type;                                   \
         union {                                                     
 
 #define GENERAL_MODULE_MAKE_MODULE(TYPE)                            \
@@ -58,6 +55,7 @@ GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
 #define GENERAL_MODULE_AFTER_MAKE()                                 \
             component_t *__component_obj;                           \
         } obj;                                                      \
+        general_object_type type;                                   \
     };
 
 GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
@@ -70,24 +68,15 @@ GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
 #define GENERAL_MODULE_BEFORE_MAKE()
 
 #define GENERAL_MODULE_MAKE_MODULE(TYPE)                            \
-static inline general_object_t *general_object_create_from_##TYPE   \
-                        (TYPE##_t *_obj) {                          \
-    general_object_t *tmp = xmalloc (sizeof (general_object_t));    \
-    tmp->obj.__##TYPE##_obj = _obj;                                 \
-    tmp->type = GO_##TYPE##_type;                                   \
-    return tmp;                                                     \
-}
-
+extern general_object_t *general_object_create_from_##TYPE   \
+                        (TYPE##_t *_obj) ;
 #define GENERAL_MODULE_AFTER_MAKE()                                 \
-static inline general_object_destory (general_object_t *_obj) {     \
-    component_destory(_obj->obj.__component_obj);                   \
-    xfree (_obj);                                                   \
-}
+extern general_object_destroy (general_object_t *_obj);
+
 
 GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
 
 
-#undef GENRAL_OBJECT_TYPE_LIST
 #define GENERAL_MODULE_BEFORE_MAKE()
 #define GENERAL_MODULE_MAKE_MODULE()
 #define GENERAL_MODULE_AFTER_MAKE()

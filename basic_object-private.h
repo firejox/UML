@@ -4,10 +4,12 @@
 #include "basic_object-protected.h"
 #include "object-protected.h"
 
+
 struct _basic_object_private {
-    single_list_t      *ports;
-    char               *name;
-    basic_object_class *_class;
+    SLIST(port_object)      *ports;
+    xstring_t               *name;
+    basic_object_class      *_class;
+    rectangle_t             range;
 };
 
 #endif

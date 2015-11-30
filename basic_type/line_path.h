@@ -3,7 +3,7 @@
 
 #include "point.h"
 #include "../single_list-template.h"
-
+#include "../canvas.h"
 
 
 typedef enum { 
@@ -27,12 +27,13 @@ typedef struct _line_path {
     SLIST(line_unit) *line_units;
 } line_path_t;
 
-extern inline line_path_t *line_path_create (void);
+extern line_path_t *line_path_create (void);
 
-extern inline void  line_path_add_pts (line_path_t *path,
+extern void  line_path_add_pts (line_path_t *path,
         SLIST(point) *pts, line_unit_type type);
 
-extern inline void line_path_destory (line_path_t *path);
+extern void line_path_paint (line_path_t *path, canvas_t *ca);
 
+extern void line_path_destroy (line_path_t *path);
 
 #endif

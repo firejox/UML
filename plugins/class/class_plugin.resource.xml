@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/tool_plugin/class_plugin/">
+        <file preprocess="xml-stripblanks">class_plugin.ui</file>
+        <file>class_plugin.css</file>
+        <file>class.svg</file>
+    </gresource>
+</gresources>

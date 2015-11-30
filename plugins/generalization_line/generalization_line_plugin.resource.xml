@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/tool_plugin/generalization_line_plugin/">
+        <file preprocess="xml-stripblanks">generalization_line_plugin.ui</file>
+        <file>generalization_line_plugin.css</file>
+        <file>generalization_line.svg</file>
+    </gresource>
+</gresources>

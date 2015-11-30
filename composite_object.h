@@ -1,11 +1,12 @@
 #ifndef __UML_COMPOSITE_OBJECT_H__
 #define __UML_COMPOSITE_OBJECT_H__
 
-#include "object.h"
-
 typedef struct _composite_object composite_object_t;
-typedef struct _composite_object_class composite_object_class;
 typedef struct _composite_object_private composite_object_private;
+
+#include "object.h"
+#include "general_object_pool.h"
+
 
 
 struct _composite_object {
@@ -13,10 +14,10 @@ struct _composite_object {
     composite_object_private *priv;
 };
 
-struct _composite_object_class {
-    object_class p_class;
-};
+extern composite_object_t *composite_object_group(general_object_pool_t *gop);
 
+
+extern general_object_pool_t *composite_object_ungroup(composite_object_t *co);
 
 
 #endif

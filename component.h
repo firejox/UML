@@ -1,5 +1,5 @@
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#ifndef __UML_MEOW_COMPONENT_H__
+#define __UML_MEOW_COMPONENT_H__
 
 #include "basic_types.h"
 #include "canvas.h"
@@ -7,7 +7,8 @@
 typedef enum {
     LINE_TYPE,
     OBJECT_TYPE,
-    REGION_TYPE
+    REGION_TYPE,
+    INVALID_TYPE
 } component_type;
 
 typedef struct _component         component_t;
@@ -26,7 +27,7 @@ struct _component_class {
     int  (*is_covered) (component_t *co, rectangle_t *re);
     void (*selected)   (component_t *co);
     void (*unselected) (component_t *co);
-    void (*destory)    (component_t *co);
+    void (*destroy)    (component_t *co);
 };
 
 
@@ -44,6 +45,6 @@ extern void           component_unselected   (component_t *co);
 
 extern int            component_get_selected (component_t *co);
 
-extern void           component_destory      (component_t *co);
+extern void           component_destroy      (component_t *co);
 
 #endif

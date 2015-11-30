@@ -1,0 +1,17 @@
+
+@define-color ttb_fg_color #000000;
+@define-color ttb_bg_color #ffffff;
+
+/*
+ * gerneral form
+ * */
+GtkRadioToolButton :checked GtkImage {
+    color: @ttb_bg_color;
+    background-color: @ttb_fg_color;
+}
+
+GtkRadioToolButton GtkImage {
+    color: @ttb_fg_color;
+    background-color: @ttb_bg_color;
+}
+

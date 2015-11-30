@@ -1,1 +1,5 @@
+/home/firejox/develop/uml_editor/build/CMakeFiles/uml_meow.dir
+/home/firejox/develop/uml_editor/build/basic_type/CMakeFiles/basic_type.dir
 /home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir
+/home/firejox/develop/uml_editor/build/plugins/class/CMakeFiles/class_plugin.dir
+/home/firejox/develop/uml_editor/build/plugins/select/CMakeFiles/select_plugin.dir

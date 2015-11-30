@@ -18,10 +18,10 @@ struct _line_private {
     port_object_t   *ed_port;
 
     int             ref_count;
+    unsigned int    paint_flag:1;
 
     line_class      *_class;
 };
-
 
 
 #endif

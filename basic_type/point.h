@@ -7,8 +7,10 @@ typedef struct _point {
     double y;
 } point_t;
 
-extern inline point_t *point_create  (double x, double y);
+extern point_t *point_create  (double x, double y);
 
-extern inline void     point_destory (point_t *pt);
+extern int is_same_point (point_t *dest, point_t *src);
+
+extern void     point_destroy (point_t *pt);
 
 #endif

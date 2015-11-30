@@ -4,9 +4,24 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/firejox/develop/uml_editor/main.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/main.c.o"
+  "/home/firejox/develop/uml_editor/basic_object.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/basic_object.c.o"
+  "/home/firejox/develop/uml_editor/component.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/component.c.o"
+  "/home/firejox/develop/uml_editor/composite_object.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/composite_object.c.o"
+  "/home/firejox/develop/uml_editor/general_object.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/general_object.c.o"
+  "/home/firejox/develop/uml_editor/general_object_pool.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/general_object_pool.c.o"
+  "/home/firejox/develop/uml_editor/line.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/line.c.o"
+  "/home/firejox/develop/uml_editor/line_decorate.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/line_decorate.c.o"
+  "/home/firejox/develop/uml_editor/object.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/object.c.o"
+  "/home/firejox/develop/uml_editor/port_object.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/port_object.c.o"
+  "/home/firejox/develop/uml_editor/region.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/region.c.o"
+  "/home/firejox/develop/uml_editor/utils.c" "/home/firejox/develop/uml_editor/build/CMakeFiles/umlmeow.dir/utils.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
+
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_C
+  "PLUGIN_DIR=\"plugins/\""
+  )
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
@@ -32,3 +47,6 @@ set(CMAKE_C_TARGET_INCLUDE_PATH
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
   )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

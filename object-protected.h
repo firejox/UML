@@ -3,6 +3,7 @@
 
 #include "object.h"
 
-extern void object_init_class (object_t *obj, object_class *_class);
+extern void object_init_class (object_t *obj,
+        object_type type, object_class *_class);
 
 #endif

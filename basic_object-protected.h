@@ -3,10 +3,14 @@
 
 #include "basic_object.h"
 
-void basic_object_init_class (basic_object_t *obj, basic_object_class *_class);
+#include "single_list-template.h"
 
-void basic_object_add_port (basic_object_t *obj, port_object_t *port);
+GENERAL_SLIST_MODULE_DEF(port_object)
 
-single_list_t *basic_object_get_ports (basic_object_t *obj);
+extern void basic_object_init_class (basic_object_t *obj, basic_object_class *_class);
+
+extern void basic_object_add_port (basic_object_t *obj, port_object_t *port);
+
+extern SLIST(port_object) *basic_object_get_ports (basic_object_t *obj);
 
 #endif

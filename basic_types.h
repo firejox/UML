@@ -6,5 +6,7 @@
 #include "basic_type/rectangle.h"
 #include "basic_type/line_path.h"
 #include "basic_type/xstring.h"
+#include "basic_type/image.h"
+#include "basic_type/rgba_color.h"
 
 #endif
