@@ -9,7 +9,7 @@ point_t *point_create (double x, double y) {
     return tmp;
 }
 
-int is_same_point (point_t *dest, point_t *src) { 
+int is_same_point (const point_t *dest, const point_t *src) { 
     return (double_equal(dest->x, src->x) && double_equal(dest->y, src->y));
 }
 

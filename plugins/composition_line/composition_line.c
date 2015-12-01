@@ -37,10 +37,15 @@ void set_start_decorate (line_t *con, point_t *st, point_t *ed) {
 
     object_set_pos (dec, &tmp);
 
-    line_decorate_set_angle (dec, atan2(st->x - ed->x, st->y - ed->y));
+    line_decorate_set_angle (dec, - atan2(st->x - ed->x, st->y - ed->y));
+    
+    width = line_decorate_get_width (dec) - 2;
 
-    st->x = tmp.x;
-    st->y = tmp.y;
+    tmp.x = st->x * ((dist - width) / dist) + ed->x * (width / dist);
+
+    tmp.y = st->y * ((dist - width) / dist) + ed->y * (width / dist);
+
+    *st = tmp;
 
 }
 
@@ -87,10 +92,11 @@ static image_t *get_src_decorate_image(void) {
     if (im)
         return im;
 
-    return (im = image_create_from_resource ("/image/composition_line", 20, 20));
+    return (im = image_create_from_resource 
+            ("/line_decorate/composition_line", 25, 25));
 }
 
-composition_line_t *generalization_line_create 
+composition_line_t *composition_line_create 
                     (port_object_t *st, port_object_t *ed) {
     composition_line_t *con = xmalloc (sizeof (composition_line_t));
     image_t *im = NULL;

@@ -7,8 +7,8 @@
 #include <math.h>
 
 #define FONT "Sans Bold 16"
-#define PADDING_H 10
-#define PADDING_W 20
+#define PADDING_H 20
+#define PADDING_W 30
 
 static int use_case_object_count = 1;
 static char default_name[25];
@@ -23,6 +23,7 @@ static void update_size (use_case_object_t *obj) {
     int w, h;
     double width, height;
 
+    GdkScreen    *scr = gdk_screen_get_default();
     PangoContext *context;
     PangoLayout *layout;
     PangoFontDescription *desc;
@@ -31,7 +32,8 @@ static void update_size (use_case_object_t *obj) {
     name = basic_object_get_name (obj);
 
     {
-        context = pango_context_new();
+        context = gdk_pango_context_get_for_screen (scr);
+        
         layout = pango_layout_new (context);
 
         pango_layout_set_text (layout, name, -1);
@@ -47,13 +49,13 @@ static void update_size (use_case_object_t *obj) {
     
     width = ((double)w / PANGO_SCALE) + PADDING_W * 2;
 
-    height = (((double)h / PANGO_SCALE) + PADDING_H * 2) * 3;
+    height = ((double)h / PANGO_SCALE) + PADDING_H * 2 ;
 
     { 
         obj->priv->region.width = width;
         obj->priv->region.height = height;
 
-        obj->priv->range.radius = width;
+        obj->priv->range.radius = width / 2;
         obj->priv->range.rate = height / width;
     }
 
@@ -122,7 +124,8 @@ static void draw_text (PangoLayout *layout, point_t *cen_pos, canvas_t *ca) {
 
     pango_layout_get_size (layout, &width, &height);
 
-    cairo_move_to (ca->cr, -((double)width / PANGO_SCALE) / 2, 0);
+    cairo_translate (ca->cr, -((double)width / PANGO_SCALE) / 2, 
+                            -((double)height / PANGO_SCALE) / 2);
 
     pango_cairo_show_layout (ca->cr, layout);
 
@@ -143,7 +146,7 @@ static void paint_part (ellipse_t *part, canvas_t *ca) {
 
         ellipse_paint (part, ca);
 
-        cairo_set_source_rgb (ca, gray, gray, gray);
+        cairo_set_source_rgb (ca->cr, gray, gray, gray);
 
         cairo_fill (ca->cr);
     }
@@ -161,11 +164,12 @@ static void paint (component_t *co, canvas_t *ca) {
 
     cairo_save (ca->cr);
 
-    {   
+    {  
+       /* 
         cairo_translate (ca->cr,
                 obj->priv->range.center.x,
                 obj->priv->range.center.y);
-        
+        */
         {
             paint_part (&obj->priv->range, ca);
         
@@ -248,8 +252,9 @@ static port_object_t *get_port_object (basic_object_t *obj,
     int i, pos_at;
 
     if (is_inside (u_obj, pos)) {
+        pt = object_get_pos (u_obj);
 
-        angle = atan2 (pos->y, pos->x);
+        angle = atan2 (pos->y - pt->y, pos->x - pt->x);
 
         for (i = 0; i < 3; i++)
             if (islessequal (a_arr[i], angle) &&
@@ -326,7 +331,7 @@ use_case_object_t *use_case_object_create (point_t *pt) {
         basic_object_add_port (obj, port);
     }
     
-    update (obj);
+    object_update (obj);
 
     return obj;
 

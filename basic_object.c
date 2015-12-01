@@ -61,15 +61,13 @@ static void update (object_t *obj) {
     SLIST_NODE(port_object) *p;
 
     const rectangle_t *range;
-    point_t top_left, bot_right;
+    point_t top_left, bot_right, real_pos;
 
     ((object_class*)b_obj->priv->_class)->update(obj);
 
     /**************** get base shape range *********************/
 
     range = ((object_class*)b_obj->priv->_class)->get_region(obj);
-
-    b_obj->priv->range.center = range->center;
 
     top_left = (point_t) {
         .x = range->center.x - range->width / 2,
@@ -87,16 +85,23 @@ static void update (object_t *obj) {
         object_update (p->data);
 
         range = object_get_region (p->data);
+        port_object_get_absolute_pos (p->data, &real_pos);
 
-        top_left.x = fmin (top_left.x, range->center.x - range->width / 2);
-        top_left.y = fmin (top_left.y, range->center.y - range->height / 2);
+        top_left.x = fmin (top_left.x, real_pos.x - range->width / 2);
+        top_left.y = fmin (top_left.y, real_pos.y - range->height / 2);
 
-        bot_right.x = fmax (bot_right.x, range->center.x + range->width / 2);
-        bot_right.y = fmax (bot_right.y, range->center.y + range->height / 2);
+        bot_right.x = fmax (bot_right.x, real_pos.x + range->width / 2);
+        bot_right.y = fmax (bot_right.y, real_pos.y + range->height / 2);
+
     }
 
     b_obj->priv->range.width = bot_right.x - top_left.x;
     b_obj->priv->range.height = bot_right.y - top_left.y;
+
+    b_obj->priv->range.center = (point_t) {
+        .x = (bot_right.x + top_left.x) / 2,
+        .y = (bot_right.y + top_left.y) / 2
+    };
 }
 
 static const rectangle_t *get_region (object_t *obj) {

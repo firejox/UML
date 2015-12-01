@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include <assert.h>
 
 static select_data_t *data = NULL;
 static GtkDialog  *ch_name  = NULL;
@@ -19,7 +20,7 @@ static void plugin_load(general_object_pool_t *pool) {
 static void merge_back_to_pool (general_object_pool_t *selected_pool) {
     general_object_pool_t *pool = data->pool;
 
-    if (pool->head == NULL) {
+    if (pool->tail == NULL) {
         pool->tail = selected_pool->tail;
     } else {
         selected_pool->tail->next = pool->head;
@@ -189,13 +190,15 @@ static void select_group (GtkMenuItem *item, gpointer user_data) {
 
         move_to_selected_pool (q);
 
+        xfunc_error_log ("selected pool %p", data->selected_pool->head);
+
         com = composite_object_group (data->selected_pool);
 
         obj = GO_CREATE(composite_object)(com);
 
         q = general_object_unit_create(obj);
 
-        double_list_prepend(p, data->pool);
+        double_list_prepend(q, data->pool);
 
         component_selected (com);
 
@@ -209,6 +212,7 @@ static void select_group (GtkMenuItem *item, gpointer user_data) {
 static void select_ungroup (GtkMenuItem *item, gpointer user_data) {
     composite_object_t *obj;
     general_object_t *g_obj;
+    general_object_unit_t *g_unit;
     general_object_pool_t *tmp;
 
     int i;
@@ -216,9 +220,22 @@ static void select_ungroup (GtkMenuItem *item, gpointer user_data) {
     
 
     if (data->select_count == 1) {
-        g_obj = data->pool->head->data;
+        g_unit = data->pool->head;
+        g_obj = g_unit->data;
+        
+        i = 0;
+        for_each_node_in_double_list(p, data->pool)
+            i++;
+
+        xfunc_error_log("pool size :%d\n", i);
 
         if (g_obj->type == GO_TYPE(composite_object)) {
+            data->pool->head = g_unit->next;
+            if (!data->pool->head)
+                data->pool->tail = NULL;
+            g_unit->data = NULL;
+            g_unit->next = NULL;
+
             obj = (composite_object_t*)GO_GET_COMPONENT(g_obj);
 
             tmp = composite_object_ungroup (obj);
@@ -226,14 +243,23 @@ static void select_ungroup (GtkMenuItem *item, gpointer user_data) {
             i = 0;
             for_each_node_in_double_list(p, tmp) 
                 i++;
+            data->select_count = i;
+
+            xfunc_error_log("compoite size :%d\n", i);
 
             merge_back_to_pool (tmp);
 
+            i = 0;
+            for_each_node_in_double_list(p, data->pool)
+                i++;
+
+            xfunc_error_log("pool size :%d\n", i);
+
             general_object_pool_destroy(tmp);
-        
+            general_object_unit_destroy(g_unit);
+            
         }
 
-        data->select_count = i;
     }
 
 }
@@ -261,13 +287,14 @@ static void select_change_object_name (GtkMenuItem *item, gpointer user_data) {
         switch (res) {
             case GTK_RESPONSE_OK:
                 basic_object_set_name (co, gtk_entry_get_text (entry));
-
+                object_update(co);
                 break;
             default:
                 break;
         }
 
         gtk_widget_destroy(ch_name);
+
     }
 }
 

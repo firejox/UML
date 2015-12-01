@@ -1,5 +1,6 @@
 #include "line-private.h"
 #include "utils.h"
+#include <assert.h>
 
 
 /****************   class chain   *********************/
@@ -7,10 +8,12 @@
 
 static void paint (component_t *co, canvas_t *ca) {
     line_t *con = co;
+    port_object_t *st_port = con->priv->st_port;
+    port_object_t *ed_port = con->priv->ed_port;
 
-    if (con->priv->paint_flag) {
-        component_paint (con->priv->st_dec, ca);
+    if (con->priv->paint_flag || st_port == NULL) {
         line_path_paint (con->priv->path  , ca);
+        component_paint (con->priv->st_dec, ca);
         component_paint (con->priv->ed_dec, ca);
     }
 

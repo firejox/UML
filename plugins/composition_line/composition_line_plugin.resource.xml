@@ -5,4 +5,7 @@
         <file>composition_line_plugin.css</file>
         <file>composition_line.svg</file>
     </gresource>
+    <gresource prefix="/line_decorate/">
+        <file alias="composition_line">composition_line_dec.svg</file>
+    </gresource>
 </gresources>

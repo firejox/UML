@@ -34,11 +34,12 @@ static void mouse_press(double x, double y) {
     point_t pt = {.x = x, .y = y};
     general_object_unit_t *p;
     component_t *co;
+    line_path_t *path;
 
     data->st_obj = NULL;
 
     for_each_node_in_double_list (p, data->pool) {
-       if (p->type != GO_TYPE(composite_object)) {
+       if (p->data->type != GO_TYPE(composite_object)) {
            co = GO_GET_COMPONENT(p->data);
 
            if (is_component_inside (co, &pt))
@@ -47,6 +48,14 @@ static void mouse_press(double x, double y) {
     }
 
     if (p) {
+        data->st_pos = data->ed_pos = pt;
+
+        set_start_decorate (data->tmp, &data->st_pos, &data->ed_pos);
+        path = path_create (&data->st_pos, &data->ed_pos);
+
+        line_set_line_path (data->tmp, path);
+
+        
         move_to_top (p);
 
         data->st_obj = (basic_object_t *)co;
@@ -60,13 +69,16 @@ static void mouse_press(double x, double y) {
 
 static void mouse_drag (double x, double y) {
     line_path_t *path;
+    point_t pt;
 
     if (data->st_port) {
         data->ed_pos.x = x;
         data->ed_pos.y = y;
 
-        set_start_decorate (data->tmp, &data->st_pos, &data->ed_pos);
-        path = path_create (&data->st_pos, &data->ed_pos);
+        pt = data->st_pos;
+
+        set_start_decorate (data->tmp, &pt, &data->ed_pos);
+        path = path_create (&pt, &data->ed_pos);
 
         line_set_line_path (data->tmp, path);
     }
@@ -77,14 +89,15 @@ static void mouse_release (double x, double y) {
     general_object_unit_t *p;
     point_t pt = {.x = x, .y = y};
     generalization_line_t *con;
+    component_t *co;
 
 
     if (data->st_obj) {
-        data->ed.x = x;
-        data->ed.y = y;
+        data->ed_pos.x = x;
+        data->ed_pos.y = y;
 
         for_each_node_in_double_list (p, data->pool) {
-            if (p->type != GO_TYPE(composite_object)) {
+            if (p->data->type != GO_TYPE(composite_object)) {
                 co = GO_GET_COMPONENT(p->data);
 
                 if (is_component_inside (co, &pt))
@@ -97,10 +110,10 @@ static void mouse_release (double x, double y) {
 
             data->ed_obj = (basic_object_t *)co; 
 
-            if (data->ed_obj == data->st_obj) {
+            if (data->ed_obj != data->st_obj) {
 
                 data->ed_port = basic_object_get_port_object 
-                                            (data->st_obj, &pt);
+                                            (data->ed_obj, &pt);
 
                 con = generalization_line_create (data->st_port, data->ed_port);
 
@@ -125,7 +138,7 @@ static handle_t get_menuitem_handle (const char *label_name) {
 }
 
 static component_t *get_tmp_component(void) {
-    if (!data->st_port)
+    if (!data->st_obj || is_same_point (&data->st_pos, &data->ed_pos))
         return NULL;
     return data->tmp;
 }

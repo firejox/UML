@@ -26,7 +26,7 @@ static void paint (component_t *co, canvas_t *ca) {
 
     rectangle_paint (&com->priv->rect, ca);
     
-    cairo_set_source_rgba (ca->cr, 0.0, 0.0, 0.0, 1.0);
+    cairo_set_source_rgba (ca->cr, 0.7, 0.7, 0.7, 0.3);
 
     cairo_fill (ca->cr);
 
@@ -149,8 +149,11 @@ static composite_object_private *private_create (general_object_pool_t *pool) {
             top_left.y = fmin (top_left.y, re->center.y - (re->height / 2.0));
 
             bot_right.x = fmax (bot_right.x, re->center.x + (re->width / 2.0));
-            bot_right.x = fmax (bot_right.x, re->center.x + (re->height / 2.0));
+            bot_right.y = fmax (bot_right.y, re->center.y + (re->height / 2.0));
         }
+
+        xfunc_error_log("top_left: %lf %lf\n", top_left.x, top_left.y);
+        xfunc_error_log("bot_right: %lf %lf\n", bot_right.x, bot_right.y);
     }
 
     width = fmax (bot_right.x - top_left.x, bot_right.y - top_left.y);

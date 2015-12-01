@@ -1,6 +1,6 @@
 #include "general_object.h"
 #include "utils.h"
-
+#include <assert.h>
 
 /*
  * general constructor and destructor generation
@@ -9,7 +9,7 @@
 #define GENERAL_MODULE_BEFORE_MAKE()
 
 #define GENERAL_MODULE_MAKE_MODULE(TYPE)                            \
-general_object_t *general_object_create_from_##TYPE          \
+general_object_t *general_object_create_from_##TYPE                 \
                         (TYPE##_t *_obj) {                          \
     general_object_t *tmp = xmalloc (sizeof (general_object_t));    \
     tmp->obj.__##TYPE##_obj = _obj;                                 \
@@ -18,9 +18,11 @@ general_object_t *general_object_create_from_##TYPE          \
 }
 
 #define GENERAL_MODULE_AFTER_MAKE()                                 \
-general_object_destroy (general_object_t *_obj) {            \
-    component_destroy(_obj->obj.__component_obj);                   \
-    xfree (_obj);                                                   \
+general_object_destroy (general_object_t *_obj) {                   \
+    if (_obj) {                                                     \
+        component_destroy(_obj->obj.__component_obj);               \
+        xfree (_obj);                                               \
+    }                                                               \
 }
 
 GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)

@@ -9,7 +9,7 @@ typedef struct _point {
 
 extern point_t *point_create  (double x, double y);
 
-extern int is_same_point (point_t *dest, point_t *src);
+extern int is_same_point (const point_t *dest, const point_t *src);
 
 extern void     point_destroy (point_t *pt);
 

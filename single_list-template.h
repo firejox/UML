@@ -57,9 +57,11 @@ single_list_##TYPE##_node_t                                                     
 }                                                                               \
 void single_list_##TYPE##_node_destroy (single_list_##TYPE##_node_t *nd)        \
 {                                                                               \
-    nd->next = NULL;                                                            \
-    DESTROY_FUNC(nd->data);                                                     \
-    xfree(nd);                                                                  \
+    if (nd) {                                                                   \
+        nd->next = NULL;                                                        \
+        DESTROY_FUNC(nd->data);                                                 \
+        xfree(nd);                                                              \
+    }                                                                           \
 }                                                                               \
 
 #define GENERAL_SLIST_MODULE_LIST_IMPL(TYPE)                                    \

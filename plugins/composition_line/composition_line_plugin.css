@@ -3,7 +3,7 @@
  * */
 
 .composition_line_plugin_btn GtkImage {
-    background-image: url("resource:///tool_plugin/composition_line/composition_line.svg");
+    background-image: url("resource:///tool_plugin/composition_line_plugin/composition_line.svg");
     background-repeat: no-repeat;
     background-position: 0px 0px;
 }

@@ -133,8 +133,8 @@ static void draw_text (PangoLayout *layout, point_t *cen_pos, canvas_t *ca) {
 
     pango_layout_get_size (layout, &width, &height);
 
-    cairo_move_to (ca->cr, -((double)width / PANGO_SCALE) / 2,
-                           -((double)height / PANGO_SCALE) / 2);
+    cairo_translate (ca->cr, -((double)width / PANGO_SCALE) / 2,
+                            -((double)height / PANGO_SCALE) / 2);
 
     pango_cairo_show_layout (ca->cr, layout);
 
@@ -234,7 +234,6 @@ static void update (object_t *obj) {
     double width, height;
     const point_t *pt;
     
-    xfunc_error_log("class object update!\n");
 
     width = c_obj->priv->range.width;
     height = c_obj->priv->range.height;
@@ -249,9 +248,7 @@ static void update (object_t *obj) {
 
     if (!is_same_point (&c_obj->priv->range.center, pt)) 
         c_obj->priv->range.center = *pt; 
-
-
-
+    
 }
 
 static const rectangle_t *get_region (object_t *obj) {
@@ -277,8 +274,9 @@ static port_object_t *get_port_object (basic_object_t *obj,
     int i, pos_at;
 
     if (is_inside (c_obj, pos)) {
+        pt = object_get_pos (c_obj);
 
-        angle = atan2 (pos->y, pos->x);
+        angle = atan2 (pos->y - pt->y, pos->x - pt->x);
 
         for (i = 0; i < 3; i++)
             if (islessequal (a_arr[i], angle) &&
@@ -346,8 +344,6 @@ class_object_t *class_object_create (point_t *pt) {
     snprintf (default_name, sizeof (default_name),
                          "Class %d", class_object_count++);
 
-    xfunc_error_log ("class default name : %s\n", default_name);
-    xfunc_error_log ("class object addr :%p\n", obj);
     basic_object_set_name (obj, default_name);
     
     object_set_pos (obj, pt);
@@ -357,7 +353,6 @@ class_object_t *class_object_create (point_t *pt) {
         basic_object_add_port (obj, port);
     }
     
-    xfunc_error_log("before update!");
     object_update (obj);
 
     return obj;

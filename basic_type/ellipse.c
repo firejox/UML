@@ -38,8 +38,10 @@ void ellipse_paint (ellipse_t *e, canvas_t *ca) {
 
     cairo_scale (ca->cr, 1, e->rate);
 
-    cairo_arc (ca->cr, 0.0, 0.0, e->radius, 0, 2*M_PI);
+    cairo_arc (ca->cr, 0.0, 0.0, e->radius, 0.0, 2*M_PI);
 
+    cairo_close_path (ca->cr);
+    
     cairo_stroke_preserve (ca->cr);
 }
 

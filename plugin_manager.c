@@ -83,7 +83,7 @@ static plugin_widgets_unit_t *load_plugin_by_path (const char *path) {
 
     pw = plugin_widgets_create (init_func());
 
-    g_signal_connect_after (pw->btn, "destroy", G_CALLBACK(destroy_handle), handle);
+    g_signal_connect (pw->btn, "destroy", G_CALLBACK(destroy_handle), handle);
 
     return plugin_widgets_unit_create(pw);
 }

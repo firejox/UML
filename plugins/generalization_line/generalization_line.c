@@ -25,7 +25,7 @@ line_path_t *path_create (point_t *st, point_t *ed) {
 
 void set_start_decorate (line_t *con, point_t *st, point_t *ed) {
     line_decorate_t *dec = line_get_start_decorate (con);
-    double dist, width;
+    double dist, width, height;
     point_t tmp;
 
     dist = hypot (st->x - ed->x, st->y - ed->y);
@@ -38,11 +38,15 @@ void set_start_decorate (line_t *con, point_t *st, point_t *ed) {
 
     object_set_pos (dec, &tmp);
 
-    line_decorate_set_angle (dec, atan2(st->x - ed->x, st->y - ed->y));
+    line_decorate_set_angle (dec, atan2(ed->y - st->y, ed->x - st->x));
 
-    st->x = tmp.x;
-    st->y = tmp.y;
+    width = line_decorate_get_width (dec) - 2;
 
+    tmp.x = st->x * ((dist - width) / dist) + ed->x * (width / dist);
+
+    tmp.y = st->y * ((dist - width) / dist) + ed->y * (width / dist);
+
+    *st = tmp;
 }
 
 /****************   class chain   *********************/
@@ -88,7 +92,7 @@ static image_t *get_src_decorate_image(void) {
     if (im)
         return im;
 
-    return (im = image_create_from_resource ("/image/generalization_line", 20, 20));
+    return (im = image_create_from_resource ("/line_decorate/generalization_line", 20, 25));
 }
 
 generalization_line_t *generalization_line_create 

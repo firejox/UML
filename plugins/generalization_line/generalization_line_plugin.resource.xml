@@ -5,4 +5,7 @@
         <file>generalization_line_plugin.css</file>
         <file>generalization_line.svg</file>
     </gresource>
+    <gresource prefix="/line_decorate/">
+        <file alias="generalization_line">generalization_line_dec.svg</file>
+    </gresource>
 </gresources>
