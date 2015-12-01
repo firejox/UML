@@ -25,7 +25,7 @@ static void paint(component_t *co, canvas_t *ca) {
     cairo_set_source_rgb (ca->cr, 1.0, 1.0, 1.0);
     rectangle_paint (&re->priv->range, ca);
 
-    cairo_set_source_rgba (ca->cr, 1.0, 1.0, 1.0, 0.1);
+    cairo_set_source_rgba (ca->cr, 1.0, 1.0, 1.0, 0.3);
 
     cairo_fill (ca->cr);
 

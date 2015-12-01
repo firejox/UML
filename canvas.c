@@ -15,8 +15,10 @@ void plugin_change (GtkToggleToolButton *btn, gpointer user_data) {
         xfunc_error_log ("load next plugin.\n");
         cur_plugin = data_plugin;
         xfunc_error_log ("current plugin addr : %p\n", cur_plugin);
-        if (cur_plugin) 
-            cur_plugin->plugin_load(cur_canvas->pool);
+        if (cur_plugin) {
+            if (cur_canvas)
+                cur_plugin->plugin_load(cur_canvas->pool);
+        }
     } else {
         xfunc_error_log ("unload current plugin. \n");
         if (cur_plugin) {
@@ -27,56 +29,8 @@ void plugin_change (GtkToggleToolButton *btn, gpointer user_data) {
 
 }
 
-/*** Incomplete optimized code
-static void get_tmp_component_range (component_t *co, rectangle_t *range) {
-    const point_t *st, *ed;
-
-    switch (component_get_type (co)) {
-        case REGION_TYPE :
-            *range = *region_get_range (co);
-            break;
-        case OBJECT_TYPE :
-            *range = *object_get_region (co);
-        case LINE_TYPE : 
-            st = port_object_get_absolute_pos (line_get_start_object ())
-            range = (rectangle_t) {
-            
-            }
-    
-    }
-}
-
-static void update_range (canvas_t *ca, component_t *co) {
-    general_object_unit_t *p;
-    const rectangle_t *range;
-
-    point_t top_left = {NAN, NAN}, bot_right = {NAN, NAN};
-
-    for_each_node_in_double_list(p, ca->pool) {
-        range = object_get_region ((object_t*)GO_UNIT_GET_COMPONENT(p));
-
-        top_left.x = fmin (top_left.x, range->center.x - range->width / 2); 
-        top_left.y = fmin (top_left.y, range->center.y - range->height / 2); 
-
-        bot_right.x = fmax (bot_right.x, range->center.x + range->width / 2);
-        bot_right.y = fmax (bot_right.y, range->center.y + range->height / 2);
-    }
-
-    ca->priv->range = (rectangle_t) {
-        .center = {
-            .x = (top_left.x + bot_right.x) / 2,
-            .y = (top_left.y + bot_right.y) / 2
-        },
-        .width = bot_right.x - top_left.x,
-        .height = bot_right.y - top_left.y
-    };
-
-}
-**/
-
 
 static void clear_surface (canvas_t *ca) {
-
 
     cairo_set_source_rgb (ca->cr, 1.0, 1.0, 1.0);
     
@@ -128,6 +82,8 @@ static gboolean draw_configure (GtkWidget *widget,
     ca->surface = surface;
     ca->ca.cr = cairo_create (surface);
 
+    clear_surface (ca);
+
     if (cur_plugin) {
         draw_all_object (ca, cur_plugin->get_tmp_component());    
     } else 
@@ -141,20 +97,18 @@ static gboolean draw_configure (GtkWidget *widget,
 }
 
 
-static gboolean draw_widget (GtkWidget *widget, cairo_t *cr, gpointer data) {
-    canvas_private *ca = cur_canvas;
-//    cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
-//    cairo_paint(cr);
+static gboolean draw_widget (GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+    canvas_private *ca = user_data;
+
     cairo_set_source_surface (cr, ca->surface, 0, 0);
     cairo_paint (cr);
-
 
     return FALSE;
 }
 
 static gboolean mouse_press (GtkWidget *widget,
                      GdkEventButton *ev, gpointer user_data) {
-    canvas_private *ca = cur_canvas;
+    canvas_private *ca = user_data;
 
     
     if (!ca->surface)
@@ -182,7 +136,7 @@ static gboolean mouse_press (GtkWidget *widget,
 
 static gboolean mouse_drag (GtkWidget *widget,
         GdkEventMotion *ev, gpointer user_data) {
-    canvas_private *ca = cur_canvas;
+    canvas_private *ca = user_data;
 
     if (!ca->surface)
         return FALSE;
@@ -211,7 +165,7 @@ static gboolean mouse_drag (GtkWidget *widget,
 
 static gboolean mouse_release (GtkWidget *widget,
         GdkEventButton *ev, gpointer user_data) {
-    canvas_private *ca = cur_canvas;
+    canvas_private *ca = user_data;
 
     if (!ca->surface)
         return FALSE;
@@ -253,9 +207,10 @@ static void draw_area_clean (GtkWidget *widget, gpointer user_data) {
 
     xfunc_error_log("drawing area destory !\n");
 
-    canvas_private_destroy (cur_canvas);
+    canvas_private_destroy (user_data);
 
     cur_plugin = NULL;
+    cur_canvas = NULL;
 
 }
 
@@ -264,22 +219,22 @@ static canvas_private *canvas_private_create (GtkDrawingArea *d_area) {
 
     ca->pool = general_object_pool_create();
 
-    g_signal_connect (d_area, "draw", G_CALLBACK(draw_widget), NULL);
+    g_signal_connect (d_area, "draw", G_CALLBACK(draw_widget), ca);
 
     g_signal_connect (d_area, "configure-event",
             G_CALLBACK(draw_configure), ca);
 
-    g_signal_connect_after (d_area, "destroy",
-            G_CALLBACK(draw_area_clean), NULL);
+    g_signal_connect (d_area, "destroy",
+            G_CALLBACK(draw_area_clean), ca);
 
     g_signal_connect (d_area, "motion-notify-event", 
-            G_CALLBACK(mouse_drag), NULL);
+            G_CALLBACK(mouse_drag), ca);
 
     g_signal_connect (d_area, "button-press-event", 
-            G_CALLBACK(mouse_press), NULL);
+            G_CALLBACK(mouse_press), ca);
 
     g_signal_connect (d_area, "button-release-event",
-            G_CALLBACK(mouse_release), NULL);
+            G_CALLBACK(mouse_release), ca);
     
     return ca;
 }

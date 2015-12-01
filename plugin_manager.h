@@ -18,6 +18,7 @@ struct _plugin_widgets {
     GtkMenu            *menu;
     GtkBuilder         *builder;
     tool_plugin_t      *plugin;
+    void               *handle;
 };
 
 

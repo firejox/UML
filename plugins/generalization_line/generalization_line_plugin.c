@@ -48,14 +48,7 @@ static void mouse_press(double x, double y) {
     }
 
     if (p) {
-        data->st_pos = data->ed_pos = pt;
 
-        set_start_decorate (data->tmp, &data->st_pos, &data->ed_pos);
-        path = path_create (&data->st_pos, &data->ed_pos);
-
-        line_set_line_path (data->tmp, path);
-
-        
         move_to_top (p);
 
         data->st_obj = (basic_object_t *)co;
@@ -64,16 +57,25 @@ static void mouse_press(double x, double y) {
 
         port_object_get_absolute_pos(data->st_port, &data->st_pos);
 
+
+        data->ed_pos = pt;
+
+        pt = data->st_pos;
+
+        set_start_decorate (data->tmp, &pt, &data->ed_pos);
+        path = path_create (&pt, &data->ed_pos);
+
+        line_set_line_path (data->tmp, path);
+
     }
 }
 
 static void mouse_drag (double x, double y) {
     line_path_t *path;
-    point_t pt;
+    point_t pt = {.x = x, .y = y};
 
     if (data->st_port) {
-        data->ed_pos.x = x;
-        data->ed_pos.y = y;
+        data->ed_pos = pt;
 
         pt = data->st_pos;
 

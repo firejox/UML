@@ -15,3 +15,6 @@ GtkRadioToolButton GtkImage {
     background-color: @ttb_bg_color;
 }
 
+GtkDrawingArea {
+    background-color: #ffffff;
+}

@@ -10,6 +10,8 @@ static component_private *private_create (
 
     priv->is_selected = 0;
 
+    priv->ref_count   = 0;
+
     priv->_class = _class;
     
     return priv;
@@ -22,6 +24,13 @@ void component_init_class (component_t *co,
         co->priv = private_create (type, _class);
 }
 
+component_t *component_ref (component_t *co) {
+    if (co) {
+        xfunc_error_log ("%p ref_count :%d\n", co, co->priv->ref_count);
+        co->priv->ref_count ++;
+    }
+    return co;   
+}
 
 void component_paint (component_t *co, canvas_t *ca) {
     if (co) {
@@ -72,9 +81,15 @@ int  component_get_selected (component_t *co) {
 }
 
 void component_destroy (component_t *co) {
+
     if (co) {
-        co->priv->_class->destroy(co);
-        xfree(co->priv);
+        xfunc_error_log ("%p ref_count :%d\n", co, co->priv->ref_count);
+
+        co->priv->ref_count --;
+        if (co->priv->ref_count <= 0) {
+            co->priv->_class->destroy(co);
+            xfree(co->priv);
+            xfree(co);
+        }
     }
-    xfree(co);
 }

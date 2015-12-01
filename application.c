@@ -147,5 +147,7 @@ void load_resource (application_t *app) {
 
 void application_run (application_t *app) {
     gtk_widget_show (app->app);
-    gtk_main ();  
+    gtk_main ();
+    
+    plugin_widget_list_destroy (app->plugins);
 }

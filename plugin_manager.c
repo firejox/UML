@@ -38,7 +38,7 @@ static void plugin_get_widgets (plugin_widgets_t *pw) {
         pw->menu = NULL;
 }
 
-static plugin_widgets_t *plugin_widgets_create (tool_plugin_t *tp) {
+static plugin_widgets_t *plugin_widgets_create (tool_plugin_t *tp, void *handle) {
     plugin_widgets_t *pw = xmalloc (sizeof (plugin_widgets_t));
 
     pw->plugin = tp;
@@ -46,16 +46,16 @@ static plugin_widgets_t *plugin_widgets_create (tool_plugin_t *tp) {
 
     plugin_get_widgets (pw);
 
+    pw->handle = handle;
+
     return pw;
 }
 
 static void plugin_widgets_destroy (plugin_widgets_t *pw) {
+    dlclose(pw->handle);
     xfree (pw);
 }
 
-static void destroy_handle (GtkWidget *widget, gpointer user_data) {
-    dlclose(user_data);
-} 
 
 static plugin_widgets_unit_t *load_plugin_by_path (const char *path) {
     plugin_widgets_t *pw = NULL;
@@ -81,9 +81,8 @@ static plugin_widgets_unit_t *load_plugin_by_path (const char *path) {
         return NULL;
     }
 
-    pw = plugin_widgets_create (init_func());
+    pw = plugin_widgets_create (init_func(), handle);
 
-    g_signal_connect (pw->btn, "destroy", G_CALLBACK(destroy_handle), handle);
 
     return plugin_widgets_unit_create(pw);
 }

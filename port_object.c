@@ -144,7 +144,7 @@ port_object_t *port_object_create (basic_object_t *obj, point_t *pt) {
 void port_object_link_line (port_object_t *port, line_t *con) {
     SLIST_NODE(line) *nd;
 
-    con = line_ref (con);
+    con = (line_t*)component_ref (con);
     nd = SLIST_NODE_CREATE(line)(con);
 
     single_list_prepend(port->priv->cons, nd);

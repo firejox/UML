@@ -287,13 +287,14 @@ static void select_change_object_name (GtkMenuItem *item, gpointer user_data) {
         switch (res) {
             case GTK_RESPONSE_OK:
                 basic_object_set_name (co, gtk_entry_get_text (entry));
+                gtk_widget_destroy(ch_name);
                 object_update(co);
                 break;
             default:
+                gtk_widget_destroy(ch_name);
                 break;
         }
 
-        gtk_widget_destroy(ch_name);
 
     }
 }

@@ -26,16 +26,11 @@ static int is_covered (component_t *co, rectangle_t *re) { return 0; }
 
 static void destroy (component_t *co) {
     line_t *con = co;
-    if (!con->priv->ref_count) {
-        component_destroy (con->priv->st_dec);
-        component_destroy (con->priv->ed_dec);
-        line_path_destroy (con->priv->path);
-        xfree (con->priv);
-    } else {
-        port_object_unlink_line (con->priv->st_port, con);
-        port_object_unlink_line (con->priv->ed_port, con);    
-        con->priv->ref_count--;
-    }
+    
+    component_destroy (con->priv->st_dec);
+    component_destroy (con->priv->ed_dec);
+    line_path_destroy (con->priv->path);
+    xfree (con->priv);
 }
 
 
@@ -59,8 +54,6 @@ static line_private *private_create (line_class *_class) {
 
     priv->st_port    = NULL;
     priv->ed_port    = NULL;
-
-    priv->ref_count  = 0;
 
     priv->paint_flag = 1; 
 
@@ -104,12 +97,6 @@ line_decorate_t *line_get_end_decorate (line_t *con) {
 }
 
 /*********************************************************/
-
-
-line_t *line_ref (line_t *con) {
-    con->priv->ref_count ++;
-    return con;
-}
 
 void line_update (line_t *con) {
     con->priv->_class->update (con);

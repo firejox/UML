@@ -20,6 +20,7 @@ extern int double_equal (double dest, double src);
 
 extern void xerror_log (const char *fmt, ...);
 
+#define NDEBUG
 #ifdef NDEBUG
 #define xfunc_error_log(...) ((void) (0))
 #else

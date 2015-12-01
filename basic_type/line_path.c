@@ -58,7 +58,6 @@ void line_path_add_pts (line_path_t *path,
 void line_path_paint (line_path_t *path, canvas_t *ca) {
     SLIST_NODE(point) *p, *q = NULL;
 
-    xfunc_error_log ("line path %p\n", *path);
 
     cairo_save (ca->cr);
 
@@ -68,7 +67,6 @@ void line_path_paint (line_path_t *path, canvas_t *ca) {
 
     for_each_node_in_single_list(p, path->pts) {
         if (q) {
-            xfunc_error_log ("line link!\n");
             cairo_move_to (ca->cr, q->data->x, q->data->y);
             cairo_line_to (ca->cr, p->data->x, p->data->y);
         }

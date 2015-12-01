@@ -30,6 +30,7 @@ struct _component_class {
     void (*destroy)    (component_t *co);
 };
 
+extern component_t   *component_ref          (component_t *co);
 
 extern void           component_paint        (component_t *co, canvas_t *ca);
 

@@ -43,7 +43,7 @@ void xstring_set_string (xstring_t *str, const char *s) {
             str->lim <<= 1;
         str->str = xrealloc (str->str, str->lim);
     }
-    str->len = snprintf (str->str, str->lim - 1, "%s", s); 
+    str->len = snprintf (str->str, str->lim, "%s", s); 
 
 }
 

@@ -8,6 +8,7 @@
 struct _component_private {
     unsigned int     is_selected:1;
     unsigned int     type:2;
+    int              ref_count;
     component_class *_class;
 };
 
