@@ -18,7 +18,7 @@ general_object_t *general_object_create_from_##TYPE                 \
 }
 
 #define GENERAL_MODULE_AFTER_MAKE()                                 \
-general_object_destroy (general_object_t *_obj) {                   \
+void general_object_destroy (general_object_t *_obj) {              \
     if (_obj) {                                                     \
         component_destroy(_obj->obj.__component_obj);               \
         xfree (_obj);                                               \

@@ -71,7 +71,7 @@ GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
 extern general_object_t *general_object_create_from_##TYPE   \
                         (TYPE##_t *_obj) ;
 #define GENERAL_MODULE_AFTER_MAKE()                                 \
-extern general_object_destroy (general_object_t *_obj);
+extern void general_object_destroy (general_object_t *_obj);
 
 
 GENERAL_MODULE(GENRAL_OBJECT_TYPE_LIST)
