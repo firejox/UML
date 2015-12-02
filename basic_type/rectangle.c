@@ -7,6 +7,7 @@ rectangle_t *rectangle_create (double width, double height) {
     tmp->center.x = tmp->center.y = 0;
     tmp->width = width;
     tmp->height = height;
+    return tmp;
 }
 
 int is_rectangle_inside (rectangle_t *rect, point_t *pt) {
