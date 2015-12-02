@@ -4,6 +4,7 @@
 #include "../../tool_plugin.h"
 #include "../../utils.h"
 #include "generalization_line-private.h"
+#include "resource.h"
 
 typedef struct _generalization_line_data generalization_line_data_t;
 

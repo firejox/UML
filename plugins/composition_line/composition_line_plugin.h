@@ -4,6 +4,7 @@
 #include "../../tool_plugin.h"
 #include "../../utils.h"
 #include "composition_line-private.h"
+#include "resource.h"
 
 typedef struct _composition_line_data composition_line_data_t;
 

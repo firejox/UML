@@ -4,6 +4,7 @@
 #include "../../tool_plugin.h"
 #include "../../utils.h"
 #include "association_line-private.h"
+#include "resource.h"
 
 typedef struct _association_line_data association_line_data_t;
 

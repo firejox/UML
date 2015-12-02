@@ -31,34 +31,48 @@ function (GLIB_COMPILE_RESOURCES VAR_NAME)
 
     set(${VAR_NAME}_HEADER "${ARGS_DEST}.h")
     set(${VAR_NAME}_SOURCE "${ARGS_DEST}.c")
+    set(${VAR_NAME}_RESOURCE ${${VAR_NAME}_SOURCE} ${${VAR_NAME}_HEADER})
 
     message (STATUS "header ${${VAR_NAME}_HEADER}")
     message (STATUS "source ${${VAR_NAME}_SOURCE}")
 
     message ("cur_dir: ${CMAKE_CURRENT_SOURCE_DIR}")
-    execute_process (
+    
+    add_custom_command (
+        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${${VAR_NAME}_SOURCE}
         COMMAND 
             ${GLIB_COMPILE_RESOURCES_EXEC}
             "--generate-source"
             "--target=${${VAR_NAME}_SOURCE}"
             ${gresource_flag}
             ${ARGS_SOURCE}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        MAIN_DEPENDENCY
+            ${ARGS_SOURCE}
+
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "build resource ${ARGS_SOURCE}"
     )
 
-    execute_process (
+    add_custom_command (
+        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/${${VAR_NAME}_HEADER}
         COMMAND 
             ${GLIB_COMPILE_RESOURCES_EXEC}
             "--generate-header"
             "--target=${${VAR_NAME}_HEADER}"
             ${gresource_flag}
             ${ARGS_SOURCE}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        MAIN_DEPENDENCY
+            ${ARGS_SOURCE}
+
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "build resource ${ARGS_SOURCE}"
     )
+
     set(${VAR_NAME}_HEADER PARENT_SCOPE)
     set(${VAR_NAME}_SOURCE PARENT_SCOPE)
 
     set(${VAR_NAME}_RESOURCE 
         ${${VAR_NAME}_SOURCE} ${${VAR_NAME}_HEADER} PARENT_SCOPE)
+
 endfunction (GLIB_COMPILE_RESOURCES)
 
