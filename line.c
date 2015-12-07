@@ -2,15 +2,33 @@
 #include "utils.h"
 #include <assert.h>
 
+/**
+ * line struct :
+ *
+ *  this is a line: <------------------------------->
+ *                  ^              ^                ^
+ *                  |              |                |
+ *              line_decorate   line_path     line_decorate
+ *
+ * ****/
 
-/****************   class chain   *********************/
+
+/*************************   class chain   **************************/
+
+
+/********************************************************************
+ * *** this part will call the component class mthod in class whose *
+ * *** inherit object class. Please make sure you initial correctly.* 
+ * *** these functions are called from component functions          *
+ * ******************************************************************/
+
 
 
 static void paint (component_t *co, canvas_t *ca) {
     line_t *con = co;
-    port_object_t *st_port = con->priv->st_port;
-    port_object_t *ed_port = con->priv->ed_port;
-
+    port_object_t *st_port = con->priv->st_port; //if st_port is NULL 
+                                                 // represent line is tmp.
+    
     if (con->priv->paint_flag || st_port == NULL) {
         line_path_paint (con->priv->path  , ca);
         component_paint (con->priv->st_dec, ca);
@@ -98,22 +116,56 @@ line_decorate_t *line_get_end_decorate (line_t *con) {
 
 /*********************************************************/
 
+/**
+ * before path_create:
+ *        port              port
+ *         |                 |
+ *         v                 v
+ *         o                 o
+ * after path_create and before line decorate update:
+ *         o-----------------o
+ * after line decorate update:
+ *         o<|-------------|>o (line path would be shorten)
+ *         o<+-------------+>o (this is wrong!)
+ * */
 void line_update (line_t *con) {
-    con->priv->_class->update (con);
+    port_object_t *pst, *ped;
+
+    point_t st, ed, tmp;
+    line_path_t *path;
+
+    pst = line_get_start_port (con);
+    ped = line_get_end_port   (con);
+
+    if (pst == NULL || ped == NULL)
+        return;
+
+    port_object_get_absolute_pos (pst, &st);
+    
+    port_object_get_absolute_pos (ped, &ed);
+
+    path = con->priv->_class->path_create (&st, &ed);
+
+    if (con->priv->st_dec)
+        con->priv->_class->start_decorate_update (con->priv->st_dec, path);
+    if (con->priv->ed_dec)
+        con->priv->_class->end_decorate_update (con->priv->ed_dec, path);
+    
+    line_set_line_path (con, path); 
 }
 
-void line_set_start_object (line_t *con, port_object_t *port) {
+void line_set_start_port (line_t *con, port_object_t *port) {
     con->priv->st_port = port;
 }
 
-void line_set_end_object (line_t *con, port_object_t *port) {
+void line_set_end_port (line_t *con, port_object_t *port) {
     con->priv->ed_port = port;
 }
 
-const port_object_t *line_get_start_object (line_t *con) {
+const port_object_t *line_get_start_port (line_t *con) {
     return con->priv->st_port;  
 }
 
-const port_object_t *line_get_end_object (line_t *con) {
+const port_object_t *line_get_end_port (line_t *con) {
     return con->priv->ed_port;
 }

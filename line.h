@@ -18,21 +18,24 @@ struct _line {
 
 
 struct _line_class {
-    component_class p_class;
-    void (*update) (line_t *con);
+    line_path_t *(* const path_create) (point_t *st, point_t *ed);
+
+    void (* const start_decorate_update) 
+                    (line_decorate_t *dec, line_path_t *path);
+    void (* const end_decorate_update) 
+                    (line_decorate_t *dec, line_path_t *path);
 };
 
 
-extern line_t *line_ref             (line_t *con);
 
 extern void line_update             (line_t *con);
 
-extern void line_set_start_object   (line_t *con, port_object_t *port);
-extern void line_set_end_object     (line_t *con, port_object_t *port);
+extern void line_set_start_port   (line_t *con, port_object_t *port);
+extern void line_set_end_port     (line_t *con, port_object_t *port);
 
 
-extern const port_object_t *line_get_start_object (line_t *con);
-extern const port_object_t *line_get_end_object   (line_t *con);
+extern const port_object_t *line_get_start_port (line_t *con);
+extern const port_object_t *line_get_end_port   (line_t *con);
 
 
 #endif

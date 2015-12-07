@@ -176,3 +176,7 @@ void port_object_get_absolute_pos (port_object_t *port, point_t *pos) {
     pos->x = o_pt->x + p_pt->x;
     pos->y = o_pt->y + p_pt->y;
 }
+
+basic_object_t *port_object_get_basic_object (port_object_t *port) {
+    return port->priv->src_obj;
+}

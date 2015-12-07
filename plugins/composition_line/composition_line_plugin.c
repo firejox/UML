@@ -4,8 +4,6 @@
 
 static composition_line_data_t *data = NULL;
 
-
-
 static void plugin_load(general_object_pool_t *pool) {
     data->pool = pool;
 }
@@ -34,9 +32,7 @@ static void mouse_press(double x, double y) {
     point_t pt = {.x = x, .y = y};
     general_object_unit_t *p;
     component_t *co;
-    line_path_t *path;
-
-    data->st_obj = NULL;
+    port_object_t *port;
 
     for_each_node_in_double_list (p, data->pool) {
        if (p->data->type != GO_TYPE(composite_object)) {
@@ -50,51 +46,31 @@ static void mouse_press(double x, double y) {
     if (p) {
         move_to_top (p);
 
-        data->st_obj = (basic_object_t *)co;
+        port = basic_object_get_port_object ((basic_object_t*)co, &pt);
 
-        data->st_port = basic_object_get_port_object (data->st_obj, &pt);
+        line_factory_register_start_port (data->fact, port);
 
-        port_object_get_absolute_pos(data->st_port, &data->st_pos);
-
-
-        data->ed_pos = pt;
-
-        pt = data->st_pos;
-
-        set_start_decorate (data->tmp, &pt, &data->ed_pos);
-        path = path_create (&pt, &data->ed_pos);
-
-        line_set_line_path (data->tmp, path);
+        line_factory_setup_end_pos (data->fact, &pt);
         
+        data->st_flag = 1;
     }
 }
 
 static void mouse_drag (double x, double y) {
     line_path_t *path;
     point_t pt = {.x = x, .y = y};
-
-    if (data->st_port) {
-        data->ed_pos = pt;
-        
-        pt = data->st_pos;
-
-        set_start_decorate (data->tmp, &pt, &data->ed_pos);
-        path = path_create (&pt, &data->ed_pos);
-
-        line_set_line_path (data->tmp, path);
-    }
+    
+    line_factory_setup_end_pos (data->fact, &pt);
 }
 
 
 static void mouse_release (double x, double y) {
     general_object_unit_t *p;
     point_t pt = {.x = x, .y = y};
-    composition_line_t *con;
     component_t *co;
+    port_object_t *port;
 
-
-    if (data->st_obj) {
-        data->ed_pos = pt;
+    if (data->st_flag) {
 
         for_each_node_in_double_list (p, data->pool) {
             if (p->data->type != GO_TYPE(composite_object)) {
@@ -108,24 +84,16 @@ static void mouse_release (double x, double y) {
         if (p) {
             move_to_top (p);
 
-            data->ed_obj = (basic_object_t *)co; 
+            port = basic_object_get_port_object ((basic_object_t*)co, &pt);
 
-            if (data->ed_obj != data->st_obj) {
+            line_factory_register_end_port (data->fact, port);
 
-                data->ed_port = basic_object_get_port_object 
-                                            (data->ed_obj, &pt);
-
-                con = composition_line_create (data->st_port, data->ed_port);
-
-                port_object_link_line (data->st_port, con);
-
-                port_object_link_line (data->ed_port, con);
-
-            }
-
+            line_factory_produce_one (data->fact);
         }
 
-        data->st_obj = NULL;
+        line_factory_unregister_all (data->fact);
+
+        data->st_flag = 0;
     }   
 }
 
@@ -136,21 +104,20 @@ static handle_t get_menuitem_handle (const char *label_name) {
 }
 
 static component_t *get_tmp_component(void) {
-    if (!data->st_obj)
-        return NULL;
-    return data->tmp;
+    return line_factory_get_sample (data->fact);
 }
 
 static void plugin_unload(void) {
-    data->st_port = NULL;
+    data->st_flag = 0;
+    line_factory_unregister_all (data->fact);
 }
 
 
-#define SELECT_PLUGIN_RES_PATH "/tool_plugin/composition_line_plugin/"
+#define TOOL_PLUGIN_RES_PATH "/tool_plugin/composition_line_plugin/"
 
 static tool_plugin_t composition_line_plugin = {
-    .resource_path = SELECT_PLUGIN_RES_PATH "composition_line_plugin.ui",
-    .style_path = SELECT_PLUGIN_RES_PATH "composition_line_plugin.css",
+    .resource_path = TOOL_PLUGIN_RES_PATH "composition_line_plugin.ui",
+    .style_path = TOOL_PLUGIN_RES_PATH "composition_line_plugin.css",
     .button_name = "composition_line_btn",
     .menu_name = NULL,
 
@@ -166,16 +133,14 @@ static tool_plugin_t composition_line_plugin = {
 };
 
 
-
 tool_plugin_t *tool_plugin_init(void) {
     if (!data) {
         composition_line_plugin_register_resource();
 
         data = xcalloc (1, sizeof (composition_line_data_t));
-        data->tmp = composition_line_create(NULL, NULL);
+        data->fact = composition_line_factory_create ();
     }
 
     return &composition_line_plugin;
 }
-
 

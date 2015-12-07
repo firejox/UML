@@ -4,6 +4,8 @@ project(UMLMeow)
 
 set (CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
+set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror=implicit")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=implicit")
 include (GResource)
 
 find_package (GTK3 REQUIRED)
@@ -35,6 +37,7 @@ set (umlmeow_libs
 set (umlmeow_objs
     component.c component.h
         line.c line.h line-protected.h
+        line_factory.c line_factory.h
         object.c object.h
             port_object.c port_object.h
             line_decorate.c line_decorate.h

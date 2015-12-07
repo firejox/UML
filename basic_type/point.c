@@ -1,6 +1,6 @@
 #include "../utils.h"
 #include "point.h"
-
+#include "math.h"
 
 point_t *point_create (double x, double y) {
     point_t *tmp = xmalloc(sizeof(point_t));
@@ -12,6 +12,8 @@ point_t *point_create (double x, double y) {
 int is_same_point (const point_t *dest, const point_t *src) { 
     return (double_equal(dest->x, src->x) && double_equal(dest->y, src->y));
 }
+
+
 
 void point_destroy (point_t *pt) {
     xfree (pt);

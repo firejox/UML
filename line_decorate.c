@@ -2,6 +2,11 @@
 #include "line_decorate.h"
 #include "object-protected.h"
 
+/**
+ * this part you should check the line struct
+ *
+ * */
+
 struct _line_decorate_private {
     image_t *im;
     double angle;

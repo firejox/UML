@@ -5,10 +5,10 @@
 #include "canvas.h"
 
 typedef enum {
+    INVALID_TYPE,
     LINE_TYPE,
     OBJECT_TYPE,
-    REGION_TYPE,
-    INVALID_TYPE
+    REGION_TYPE
 } component_type;
 
 typedef struct _component         component_t;
