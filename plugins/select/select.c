@@ -316,9 +316,18 @@ static component_t *get_tmp_component(void) {
 }
 
 static void plugin_unload(void) {
+    general_object_unit_t *p;
     
     data->selected_pool->head = NULL;
     data->selected_pool->tail = NULL;
+
+    if (data->select_count) {
+        for_each_node_in_double_list (p, data->pool) {
+            if (!data->select_count) 
+                break;
+            component_unselected (GO_UNIT_GET_COMPONENT(p));
+        }
+    }
     data->select_count = 0;
 }
 
